@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import doctorImage from 'D:/Kuliah/Magang/project1/klinik-app/src/9bc0ceb83d86f8767d2f02151de1ee7c.jpg';
+import doctorImage from 'C:/Users/Kirouch Alqornie Gym/Documents/Kuliah/Semester 7/PKN/proyek/MACKIN-CARE/src/assets/9bc0ceb83d86f8767d2f02151de1ee7c.jpg';
+import { supabase } from './supabaseClient';
+
 // Icon component for the checkmark
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -9,6 +11,13 @@ const CheckIcon = ({ className }) => (
 
 // Main App Component
 export default function App() {
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [role, setRole] = useState('doctor'); // Tambahkan state role
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   // State for the password input
   const [password, setPassword] = useState('');
   // State to toggle password visibility
@@ -47,10 +56,55 @@ export default function App() {
     </li>
   );
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    // Validasi password requirements
+    if (!Object.values(passwordRequirements).every(Boolean)) {
+      setError('Password belum memenuhi semua syarat.');
+      setLoading(false);
+      return;
+    }
+    // Registrasi ke Supabase Auth
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username }
+      }
+    });
+    if (signUpError) {
+      setError(signUpError.message);
+      setLoading(false);
+      return;
+    }
+    // Insert ke tabel profiles
+    const user = data.user;
+    if (user) {
+      await supabase
+        .from('profiles')
+        .insert([
+          {
+            user_id: user.id,
+            nama: username,
+            email: email,
+            role: role
+          }
+        ]);
+    }
+    setError('');
+    alert('Akun berhasil dibuat! Silakan cek email untuk verifikasi.');
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    setRole('doctor');
+    setLoading(false);
+  };
+
   return (
     <>
       {/* --- FONT IMPORT --- */}
-      {/* Using React Helmet or similar is better for production, but for a single file this is fine. */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
@@ -76,7 +130,7 @@ export default function App() {
               </div>
 
               {/* --- FORM --- */}
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Email Input */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -86,21 +140,46 @@ export default function App() {
                     type="email"
                     id="email"
                     name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-shadow"
+                    required
                   />
                 </div>
 
                 {/* Username Input */}
                 <div>
                   <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Username
+                    Nama Lengkap
                   </label>
                   <input
                     type="text"
                     id="username"
                     name="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-shadow"
+                    required
                   />
+                </div>
+
+                {/* Role Input */}
+                <div>
+                  <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                    Pilih Role
+                  </label>
+                  <select
+                    id="role"
+                    name="role"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm"
+                    required
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="user">User</option>
+                  </select>
                 </div>
 
                 {/* Password Input */}
@@ -135,6 +214,7 @@ export default function App() {
                   {renderRequirement('One number', passwordRequirements.number)}
                   {renderRequirement('One lowercase character', passwordRequirements.lowercase)}
                 </ul>
+                {error && <div className="text-red-500 text-sm">{error}</div>}
 
                 {/* Subscribe Checkbox */}
                 <div className="flex items-start">
@@ -171,8 +251,9 @@ export default function App() {
                 <button
                   type="submit"
                   className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                  disabled={loading}
                 >
-                  Create an account
+                  {loading ? 'Membuat akun...' : 'Create an account'}
                 </button>
 
                 {/* Footer Login Link (for smaller screens) */}
