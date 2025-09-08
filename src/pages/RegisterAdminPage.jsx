@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase'; // ⬅ import client
 
-import doctorImage from 'C:/Users/Kirouch Alqornie Gym/Documents/Kuliah/Semester 6/PKN/Tahap/Tahap 1/MACKIN-CARE/src/assets/admin.jpg';
+import doctorImage from 'D:/Kuliah/Magang/project2/MACKIN-CARE/src/assets/admin.jpg';
 
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
