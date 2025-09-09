@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase'; // ⬅ import client
-import adminImage from 'C:/Users/Kirouch Alqornie Gym/Documents/Kuliah/Semester 7/Magang/MACKIN-CARE/src/assets/halaman/admin.jpg';
+import adminImage from '../assets/halaman/admin.jpg';
+
 
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import doctorImage from 'C:/Users/Kirouch Alqornie Gym/Documents/Kuliah/Semester 7/Magang/MACKIN-CARE/src/assets/halaman/doctor.jpg';
+import doctorImage from '../assets/halaman/doctor.jpg';
 
 const EyeOpenIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
