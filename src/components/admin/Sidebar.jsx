@@ -66,12 +66,12 @@ function Sidebar() {
             <p className="text-sm text-gray-500 dark:text-gray-400">Online</p>
           </div>
         </div>
-        <button className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-900 dark:hover:bg-red-800 text-red-600 dark:text-red-300 transition-colors">
+        <NavLink to="/login/admin" className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-900 dark:hover:bg-red-800 text-red-600 dark:text-red-300 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
             </svg>
             <span>Logout</span>
-        </button>
+        </NavLink>
       </div>
     </aside>
   );
