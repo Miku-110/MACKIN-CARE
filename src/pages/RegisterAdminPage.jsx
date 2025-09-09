@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase'; // ⬅ import client
-import doctorImage from '../assets/admin.jpg';
+import adminImage from 'C:/Users/Kirouch Alqornie Gym/Documents/Kuliah/Semester 7/Magang/MACKIN-CARE/src/assets/halaman/admin.jpg';
 
 const CheckIcon = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -164,7 +164,7 @@ export default function RegisterAdminPage() {
 
         {/* IMAGE */}
         <div className="hidden lg:flex items-center justify-center bg-indigo-50">
-          <img src={doctorImage} alt="Admin panel illustration" className="w-full h-full object-cover" />
+          <img src={adminImage} alt="Admin panel illustration" className="w-full h-full object-cover" />
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 // Pastikan path ke komponen Sidebar Anda sudah benar
 // Sesuaikan jika folder Anda berbeda, misalnya './components/Sidebar'
-import Sidebar from '../components/Sidebar'; 
+import Sidebar from '../components/admin/Sidebar'; 
 
 function AdminLayout() {
   return (
